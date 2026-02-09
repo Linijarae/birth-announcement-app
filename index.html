@@ -7,9 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@300;400;600&family=Nunito:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     
     <style>
-        /* =========================================
-           VARIABLES GLOBALES & THEMES
-           ================================********* */
         :root {
             --header-height: 235px; 
             --white: #ffffff;
@@ -18,15 +15,14 @@
             --error: #ff6961;
         }
 
-        /* --- THEME FILLE (ELENA) --- */
         body.theme-girl {
             --main-bg-color: #fafafa;
             --primary-pastel: #FFD1DC;
             --primary-darker: #ffb7c5;
-            --accent-color: #C8A2C8;   /* Parme */
-            --accent-dark: #a07da0;    /* Parme foncé */
-            --highlight-color: #E0CDA9; /* Doré Clair */
-            --title-color: #C47F58;    /* Terre de sienne */
+            --accent-color: #C8A2C8;
+            --accent-dark: #a07da0;
+            --highlight-color: #E0CDA9;
+            --title-color: #C47F58;
             
             --header-img: url('images/header_fille.png');
             --bg-pattern: url('images/back_fille.png');
@@ -40,13 +36,12 @@
             --photo-shadow: inset 0 0 0 2px #FFD1DC, 0 0 0 6px #C8A2C8, 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* --- THEME GARCON (MARIN) --- */
         body.theme-boy {
             --main-bg-color: #fafafa;
             --primary-pastel: #D6EAF8;
             --primary-darker: #AED6F1;
-            --accent-color: #9CAF88;   /* Vert Sauge */
-            --accent-dark: #5F7146;    /* Vert Foncé */
+            --accent-color: #9CAF88;
+            --accent-dark: #5F7146;
             --highlight-color: #5F7146; 
             --title-color: #C47F58;
             
@@ -62,9 +57,6 @@
             --photo-shadow: inset 0 0 0 2px #9CAF88, 0 0 0 6px #5F7146, 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* =========================================
-           STYLES GÉNÉRAUX
-           ================================********* */
         body {
             font-family: 'Nunito', sans-serif;
             background-color: var(--main-bg-color);
@@ -96,7 +88,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* --- HEADER --- */
         .main-header {
             background-image: var(--header-img);
             background-size: cover;
@@ -126,7 +117,6 @@
             letter-spacing: 1px;
         }
 
-        /* --- JEU --- */
         #game-section {
             min-height: calc(100vh - var(--header-height));
             display: flex;
@@ -157,7 +147,6 @@
             margin: 0 auto;
         }
 
-        /* GRILLE */
         .crossword-container {
             display: grid;
             grid-template-columns: repeat(12, 40px); 
@@ -194,7 +183,6 @@
         }
         body.theme-boy .mystery.revealed { color: #2E86C1; }
 
-        /* CLAVIER */
         .keyboard {
             display: flex;
             flex-wrap: wrap;
@@ -221,7 +209,6 @@
         .key.correct { background-color: var(--success); color: white; border-color: var(--success); pointer-events: none; }
         .key.wrong { background-color: var(--error); color: white; border-color: var(--error); opacity: 0.6; pointer-events: none; }
 
-        /* --- SECTION FINALE --- */
         #final-content {
             display: none; 
             opacity: 0;
@@ -556,9 +543,8 @@
     </div> 
 
     <script>
-        // CONFIGURATION
         const config = {
-            girl: { letters: ['E', 'A'] }, // ELENA (E, L, E, N, A) -> L and N are given.
+            girl: { letters: ['E', 'A'] }, 
             boy: { letters: ['M', 'R', 'I'] }
         };
 
@@ -569,7 +555,6 @@
         const keyboardDiv = document.getElementById('keyboard');
         let mysteryCells;
 
-        // INITIALISATION
         function initGame() {
             keyboardDiv.innerHTML = '';
             foundCount = 0;
@@ -651,12 +636,10 @@
             photoFrames.forEach(frame => observer.observe(frame));
         }
 
-        // FONCTION DE BASCULEMENT DE THEME
         function toggleTheme() {
             const body = document.body;
             const isGirl = body.classList.contains('theme-girl');
             
-            // 1. Changer la classe body
             if (isGirl) {
                 body.classList.replace('theme-girl', 'theme-boy');
                 currentTheme = 'boy';
@@ -665,24 +648,20 @@
                 currentTheme = 'girl';
             }
 
-            // 2. Basculer la visibilité des contenus HTML
             document.querySelectorAll('.content-girl').forEach(el => el.classList.toggle('hidden'));
             document.querySelectorAll('.content-boy').forEach(el => el.classList.toggle('hidden'));
 
-            // 3. Mettre à jour les images dynamiques
             const suffix = currentTheme === 'girl' ? '_fille' : '_garcon';
             document.querySelectorAll('.dynamic-img').forEach(img => {
                 const baseName = img.dataset.name;
                 img.src = `images/${baseName}${suffix}.png`;
             });
 
-            // 4. Réinitialiser le jeu si on est encore sur la page jeu
             if (document.getElementById('game-section').style.display !== 'none') {
                 initGame();
             }
         }
 
-        // Lancer au démarrage
         initGame();
 
     </script>
